@@ -112,7 +112,7 @@ export default function HouseCard({ house, showPrice, currentImageIndex, setCurr
           <div className={infoBoxStyle}>
             <p className={textStyle}>
               <FaBath className="inline-block mr-1 sm:mr-2" />
-              {house.bathroom}
+              {house.bathroom} banyo
             </p>
           </div>
         </div>
