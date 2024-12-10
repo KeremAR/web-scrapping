@@ -11,6 +11,7 @@ import { IoLogoModelS } from "react-icons/io";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { BsFillExclamationTriangleFill } from "react-icons/bs";
 import { SiBmw, SiFiat, SiMercedes, SiFord, SiAudi } from "react-icons/si";
+import CarImage from './CarImage'
 
 export default function Card({ car, showPrice }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -77,10 +78,9 @@ export default function Card({ car, showPrice }) {
       <div className="relative aspect-video">
         {car.image_urls && car.image_urls.length > 0 && (
           <>
-            <img
+            <CarImage
               src={car.image_urls[currentImageIndex]}
               alt={`${car.title} - Image ${currentImageIndex + 1}`}
-              className="w-full h-full object-cover"
             />
             {/* Navigation Buttons */}
             <div className="absolute inset-0 flex items-center justify-between p-4">

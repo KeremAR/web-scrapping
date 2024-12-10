@@ -182,7 +182,7 @@ export default function PriceGuess({ actualPrice, onGameOver, gameOver, timeLeft
 
       {gameOver && (
         <div className="mt-4 text-center text-lg font-semibold text-red-600">
-          Time's up! The actual price was {actualPrice}
+          Time&apos;s up! The actual price was {actualPrice}
         </div>
       )}
     </div>
