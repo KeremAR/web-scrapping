@@ -2,15 +2,17 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import Card from '@/components/Card';
-import PriceGuess from '@/components/PriceGuess';
+import CarPriceGuess from '@/components/CarPriceGuess';
+import BackButton from '@/components/BackButton';
 
 export default function CarsGame() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentCar, setCurrentCar] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(15); // Changed to 15 seconds
+  const [timeLeft, setTimeLeft] = useState(15);
   const [showingResults, setShowingResults] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     fetchCars();
@@ -31,6 +33,7 @@ export default function CarsGame() {
         setCurrentCar(newCar);
       }
 
+      setCurrentImageIndex(0);
       setGameOver(false);
       setShowingResults(false);
       setTimeLeft(15);
@@ -41,6 +44,7 @@ export default function CarsGame() {
     if (cars.length > 0 && !currentCar) {
       const randomIndex = Math.floor(Math.random() * cars.length);
       setCurrentCar(cars[randomIndex]);
+      setCurrentImageIndex(0);
     }
   }, [cars, currentCar]);
 
@@ -78,6 +82,7 @@ export default function CarsGame() {
 
   return (
     <main className="container mx-auto p-4">
+      <BackButton />
       <div className="max-w-3xl mx-auto">
         {currentCar && (
           <>
@@ -103,8 +108,13 @@ export default function CarsGame() {
 
             {/* Add some padding to prevent content jump when timer becomes sticky */}
             <div className="mt-4">
-              <Card car={currentCar} showPrice={gameOver} />
-              <PriceGuess
+              <Card
+                car={currentCar}
+                showPrice={gameOver}
+                currentImageIndex={currentImageIndex}
+                setCurrentImageIndex={setCurrentImageIndex}
+              />
+              <CarPriceGuess
                 actualPrice={currentCar.price}
                 onGameOver={handleGameOver}
                 gameOver={gameOver}

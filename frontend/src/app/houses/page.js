@@ -2,7 +2,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import HouseCard from '@/components/HouseCard';
-import PriceGuess from '@/components/PriceGuess';
+import HousePriceGuess from '@/components/HousePriceGuess';
+import BackButton from '@/components/BackButton';
 
 export default function HousesGame() {
   const [houses, setHouses] = useState([]);
@@ -11,6 +12,7 @@ export default function HousesGame() {
   const [gameOver, setGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(15);
   const [showingResults, setShowingResults] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     fetchHouses();
@@ -31,6 +33,7 @@ export default function HousesGame() {
         setCurrentHouse(newHouse);
       }
 
+      setCurrentImageIndex(0);
       setGameOver(false);
       setShowingResults(false);
       setTimeLeft(15);
@@ -41,6 +44,7 @@ export default function HousesGame() {
     if (houses.length > 0 && !currentHouse) {
       const randomIndex = Math.floor(Math.random() * houses.length);
       setCurrentHouse(houses[randomIndex]);
+      setCurrentImageIndex(0);
     }
   }, [houses, currentHouse]);
 
@@ -78,6 +82,7 @@ export default function HousesGame() {
 
   return (
     <main className="container mx-auto p-4">
+      <BackButton />
       <div className="max-w-3xl mx-auto">
         {currentHouse && (
           <>
@@ -103,8 +108,13 @@ export default function HousesGame() {
 
             {/* Add some padding to prevent content jump when timer becomes sticky */}
             <div className="mt-4">
-              <HouseCard house={currentHouse} showPrice={gameOver} />
-              <PriceGuess
+              <HouseCard
+                house={currentHouse}
+                showPrice={gameOver}
+                currentImageIndex={currentImageIndex}
+                setCurrentImageIndex={setCurrentImageIndex}
+              />
+              <HousePriceGuess
                 actualPrice={currentHouse.price}
                 onGameOver={handleGameOver}
                 gameOver={gameOver}
