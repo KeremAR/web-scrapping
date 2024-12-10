@@ -84,7 +84,8 @@ export default function HouseCard({ house, showPrice, currentImageIndex, setCurr
           <div className={infoBoxStyle}>
             <p className={textStyle}>
               <FaRulerCombined className="inline-block mr-1 sm:mr-2" />
-              {house.square_gross} <span className="font-bold mx-1">/</span> {house.square_net}
+              {house.square_gross} m² <span className="font-bold mx-1">/</span> {house.square_net}{' '}
+              m²
             </p>
           </div>
           <div className={infoBoxStyle}>
