@@ -2,6 +2,7 @@ from supabase import create_client
 import os
 from datetime import datetime
 from dotenv import load_dotenv
+import pandas as pd
 
 # Load environment variables
 load_dotenv()
@@ -12,6 +13,7 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 # Initialize Supabase client
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
 
 def clear_car_data():
     """
@@ -25,6 +27,7 @@ def clear_car_data():
         print(f"Error clearing car data: {e}")
         raise e
 
+
 def store_car_data(df):
     """
     Store car data in Supabase
@@ -32,7 +35,7 @@ def store_car_data(df):
     try:
         # Clear existing data first
         clear_car_data()
-        
+
         # Convert DataFrame rows to list of dictionaries
         cars_data = []
         for _, row in df.iterrows():
@@ -57,10 +60,68 @@ def store_car_data(df):
 
         # Insert data into Supabase
         result = supabase.table('cars').insert(cars_data).execute()
-        
+
         print(f"Successfully stored {len(cars_data)} cars in the database")
         return result
-    
+
     except Exception as e:
         print(f"Error storing data in Supabase: {e}")
-        raise e 
+        raise e
+
+
+def clear_house_data():
+    """
+    Delete all records from the houses table
+    """
+    try:
+        result = supabase.table('houses').delete().neq('id', 0).execute()
+        print("Successfully cleared all house data from database")
+        return result
+    except Exception as e:
+        print(f"Error clearing house data: {e}")
+        raise e
+
+
+def store_house_data(df):
+    """
+    Store house data in Supabase
+    """
+    try:
+        # Clear existing data first
+        clear_house_data()
+
+        # Convert DataFrame rows to list of dictionaries
+        houses_data = []
+        for _, row in df.iterrows():
+            house_data = {
+                'title': row['Title'],
+                'price': row['Price'],
+                'city': row['City'],
+                'district': row['District'],
+                'listing_date': row['Date'],
+                'square_gross': row['Square_Gross'],
+                'square_net': row['Square_Net'],
+                'rooms': row['Rooms'],
+                'age': row['Age'],
+                'floor': row['Floor'],
+                'building_floor': row['Building_Floor'],
+                'heating': row['Heating'],
+                'bathroom': row['Bathroom'],
+                'elevator': row['Elevator'],
+                'parking': row['Parking'],
+                'furnished': row['Furnished'],
+                'description': row['Description'],
+                'image_urls': row['Image_Urls'],
+                'created_at': datetime.now().isoformat()
+            }
+            houses_data.append(house_data)
+
+        # Insert data into Supabase
+        result = supabase.table('houses').insert(houses_data).execute()
+
+        print(f"Successfully stored {len(houses_data)} houses in the database")
+        return result
+
+    except Exception as e:
+        print(f"Error storing house data in Supabase: {e}")
+        raise e
