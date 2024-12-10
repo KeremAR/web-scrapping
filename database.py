@@ -87,6 +87,11 @@ def store_house_data(df):
     Store house data in Supabase
     """
     try:
+        # Check if DataFrame is empty
+        if df.empty:
+            print("No data to store")
+            return None
+
         # Clear existing data first
         clear_house_data()
 
@@ -94,27 +99,31 @@ def store_house_data(df):
         houses_data = []
         for _, row in df.iterrows():
             house_data = {
-                'title': row['Title'],
-                'price': row['Price'],
-                'city': row['City'],
-                'district': row['District'],
-                'listing_date': row['Date'],
-                'square_gross': row['Square_Gross'],
-                'square_net': row['Square_Net'],
-                'rooms': row['Rooms'],
-                'age': row['Age'],
-                'floor': row['Floor'],
-                'building_floor': row['Building_Floor'],
-                'heating': row['Heating'],
-                'bathroom': row['Bathroom'],
-                'elevator': row['Elevator'],
-                'parking': row['Parking'],
-                'furnished': row['Furnished'],
-                'description': row['Description'],
-                'image_urls': row['Image_Urls'],
+                'title': str(row['Title']),
+                'price': str(row['Price']),
+                'city': str(row['City']),
+                'district': str(row['District']),
+                'listing_date': str(row['Date']),
+                'square_gross': str(row['Square_Gross']),
+                'square_net': str(row['Square_Net']),
+                'rooms': str(row['Rooms']),
+                'age': str(row['Age']),
+                'floor': str(row['Floor']),
+                'building_floor': str(row['Building_Floor']),
+                'heating': str(row['Heating']),
+                'bathroom': str(row['Bathroom']),
+                'elevator': str(row['Elevator']),
+                'parking': str(row['Parking']),
+                'furnished': str(row['Furnished']),
+                'description': str(row['Description']),
+                'image_urls': row['Image_Urls'] if isinstance(row['Image_Urls'], list) else [],
                 'created_at': datetime.now().isoformat()
             }
             houses_data.append(house_data)
+
+        if not houses_data:
+            print("No valid house data to store")
+            return None
 
         # Insert data into Supabase
         result = supabase.table('houses').insert(houses_data).execute()
