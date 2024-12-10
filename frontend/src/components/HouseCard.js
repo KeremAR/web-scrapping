@@ -100,7 +100,7 @@ export default function HouseCard({ house, showPrice, currentImageIndex, setCurr
           <div className={infoBoxStyle}>
             <p className={textStyle}>
               <BsFillBuildingsFill className="inline-block mr-1 sm:mr-2" />
-              {house.floor} <span className="font-bold mx-1">/</span> {house.total_floors}
+              {house.floor} <span className="font-bold mx-1">/</span> {house.building_floor}
             </p>
           </div>
           <div className={infoBoxStyle}>
@@ -122,7 +122,7 @@ export default function HouseCard({ house, showPrice, currentImageIndex, setCurr
           <div className={infoBoxStyle}>
             <p className={textStyle}>
               <RiBuilding2Line className="inline-block mr-1 sm:mr-2" />
-              {house.building_age}
+              {house.age}
             </p>
           </div>
           <div className={infoBoxStyle}>
