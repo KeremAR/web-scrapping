@@ -8,7 +8,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-navy-600 to-navy-800">
       <div className="container mx-auto px-4 py-16">
         <h1 className="text-4xl md:text-6xl font-bold text-center text-white mb-8">
-          Fiyat Tahmin Oyunu
+          Fiyat Tahmin Oyu
         </h1>
         <p className="text-xl text-center text-gray-300 mb-16">
           Hangi kategoride fiyat tahmin etmek istersiniz?

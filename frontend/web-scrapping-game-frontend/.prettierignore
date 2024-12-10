@@ -1,7 +1,0 @@
-.next
-node_modules
-build
-dist
-.vercel
-public
-package-lock.json 
